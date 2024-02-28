@@ -20,7 +20,6 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'name'=>'Tom',
            'is_active'=>1,
-           'role_id'=>1,
            'email'=>'syntraprogrammeurs@gmail.com',
            'photo_id'=>1,
             'password'=> Hash::make('12345678'),
