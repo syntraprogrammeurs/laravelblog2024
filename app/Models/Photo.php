@@ -11,7 +11,7 @@ class Photo extends Model
     protected $fillable = [
         'file',
     ];
-    protected $uploads = '/assets/img/';
+    protected $uploads = 'assets/img/';
 
     public function getFileAttribute($photo){
         return $this->uploads . $photo;

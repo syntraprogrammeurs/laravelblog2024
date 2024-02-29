@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class AdminUsersController extends Controller
@@ -87,45 +88,46 @@ class AdminUsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //validation
-        request()->validate([
-           'name'=>['required','max:255','min:2'],
-           'email'=>['required','email'],
-           'roles'=>['required', Rule::exists('roles', 'id')],
-           'is_active'=>'required'
+        $user = User::findOrFail($id);
+
+        // Valideer de input
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email',
+            'password' => 'nullable|min:6',
+            'photo_id' => 'nullable|image|max:2048', // Max 2MB
+            // Voeg andere velden toe die je wilt valideren
         ]);
 
         $user = User::findOrFail($id);
         if(trim($request->password) == ''){
             $input = $request->except('password');
-        }else{
+        } else {
             $input = $request->all();
-            $input['password']= Hash::make($request['password']);
+            $input['password'] = Hash::make($request['password']);
         }
-        //oude foto verwijderen
-        //kijken of de foto bestaat?
-        if($request->hasFile('photo_id')){
-            //the file upload behandelen
-            $oldPhoto = Photo::find($user->photo_id);
-            if($oldPhoto){
-                $oldImagePath = public_path($oldPhoto->file);
-                if(file_exists($oldImagePath)){
-                    //fysisch verwijderen van server
-                    unlink($oldImagePath);
-                }
-                //verwijderen in de database
-                $oldPhoto->delete();
+        // oude foto verwijderen
+        //we kijken eerst of er een foto bestaat
+        if ($request->hasFile('photo_id')) {
+            $oldPhoto = $user->photo; // de huidige foto van de gebruiker
+            $path = request()->file('photo_id')->store('users');
+            if ($oldPhoto) {
+                //dd($oldPhoto);
+                //public_path = C:\wamp64\www\laravelblog2024\public\
+                //$oldPhoto->file = assets/img/1709202831hond.jpg
+                // Extract het daadwerkelijke opslagpad uit $oldPhoto->file
+                $storagePath = str_replace('assets/img/', '', $oldPhoto->file);
+                unlink(public_path('assets/img/users/'.$storagePath));
+                // $oldPhoto->delete();
+                $oldPhoto->update(['file'=>$path]);// opslaan nieuwe foto
+                move(public_path('assets/img/users'.$path));
+                $input['photo_id'] = $oldPhoto->id;
+            }else{
+                $photo = Photo::create(['file' => $path]);
+                $input['photo_id'] = $photo->id;
             }
-            //nieuwe foto toevoegen
-            $file = $request->file('photo_id');
-            $name = time() . $file->getClientOriginalName();
-            $file->move('assets/img', $name);
-            $photo = Photo::create(['file'=>$name]);
-            $input['photo_id'] = $photo->id;
-        }else{
-            $input['photo_id'] =$user->photo_id;
         }
         $user->update($input);
         $user->roles()->sync($request->roles, true);
