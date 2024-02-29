@@ -44,7 +44,9 @@
                         @foreach($users as $user)
                             <tr>
                                 <td>{{$user->id}}</td>
-                                <td>{{$user->photo_id}}</td>
+                                <td>
+                                    <img class="rounded-circle border border-3 border-primary p-1" width="62" height="62" src="{{ $user->photo ?  asset($user->photo->file) : 'http://placehold.it/62x62'}}" alt="{{$user->name}}">
+                                </td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>
