@@ -13,9 +13,9 @@ class Photo extends Model
     ];
     protected $uploads = 'assets/img/';
 
-    public function getFileAttribute($photo){
-        return $this->uploads . $photo;
-    }
+//    public function getFileAttribute($photo){
+//        return $this->uploads . $photo;
+//    }
 
     /* Relations */
     public function user(){
