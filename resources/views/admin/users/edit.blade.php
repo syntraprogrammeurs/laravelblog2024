@@ -48,13 +48,22 @@
                     {!! Form::label('photo_id', 'Image:') !!}
                     {!! Form::file('photo_id',null,['class'=>'form-control']) !!}
                 </div>
-                <div class="form-group">
-                    {!! Form::submit('Update User',['class'=>'btn btn-warning'])!!}
+                <div class="form-group d-flex justify-content-end">
+                    <div class="me-1">
+                        {!! Form::submit('Update User',['class'=>'btn btn-warning'])!!}
+                        {!! Form::close() !!}
+                    </div>
+                    <div>
+                        {!! Form::open(['method'=>'DELETE','action'=>['App\Http\Controllers\AdminUsersController@destroy',$user->id]]) !!}
+                        {{Form::submit('Delete User',['class'=>'btn btn-danger'])}}
+                        {!! Form::close() !!}
+                    </div>
                 </div>
-                {!! Form::close() !!}
+
             </div>
             <div class="col-4">
-                <img class="img-fluid img-thumbnail" src="{{$user->photo ? asset($user->photo->file) : 'http://placehold.it/400x400'}}" alt="{{$user->name}}">
+                <img class="img-fluid img-thumbnail" src="{{$user->photo ? asset('assets/img/users/' .
+                                    $user->photo->file) : 'http://placehold.it/400x400'}}" alt="{{$user->name}}">
             </div>
         </div>
 

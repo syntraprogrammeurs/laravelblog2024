@@ -24,7 +24,9 @@ class AdminUsersController extends Controller
     {
         //admin/users/index
         //ELOQUENT ORM
-        $users = User::all();
+        $users = User::orderByDesc('id')->withTrashed()->get();
+        //onderstaande lijn is enkel voor standaard html tabellen die ook een paginering wensen. Dus dit wordt niet gebruikt met de javascript datatables.
+        //$users = User::orderByDesc('id')->withTrashed()->paginate(3);
         //$users = DB::table('users')->get(); //DB FACADE
         $roles = Role::all();
         return view('admin.users.index',['users'=>$users, 'roles'=>$roles]);
@@ -108,65 +110,62 @@ class AdminUsersController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id){
-        // Valideer de input van de gebruiker met specifieke regels voor elk veld
+        //validatie
         $request->validate([
-            'name' => 'required|max:255', // Naam is verplicht en mag maximaal 255 tekens lang zijn
-            'email' => 'required|email', // E-mail is verplicht en moet een geldig e-mailadres zijn
-            'password' => 'nullable|min:6', // Wachtwoord is optioneel maar moet minimaal 6 tekens lang zijn als het wordt opgegeven
-            'photo_id' => 'nullable|image|max:2048', // Foto is optioneel, moet een afbeeldingsbestand zijn en mag maximaal 2MB groot zijn
+           'name'=>'required|max:255',
+            'email'=>'required|email',
+           'password'=>'nullable|min:6',
+           'photo_id'=>'nullable|max:2048'
         ]);
-
-        // Zoek de gebruiker op ID, gooi een 404 error als de gebruiker niet gevonden wordt
+        //zoek user op
         $user = User::findOrFail($id);
 
-        // Controleer of het wachtwoordveld leeg is, zo ja, sluit het uit van de update
-        if(trim($request->password) == ''){
-            $input = $request->except('password');
-        } else {
-            // Als er een nieuw wachtwoord is opgegeven, neem alle input op en hash het nieuwe wachtwoord
+        //controle: wachtwoordveld leeg? zo ja, uitsluiten van de update
+        if(trim($request->password)==''){
+            $input =$request->except('password');
+        }else{
             $input = $request->all();
-            $input['password'] = Hash::make($request['password']);
+            $input['password']= Hash::make($request['password']);
         }
 
-        // Controleer of er een nieuwe foto is geüpload
-        if ($request->hasFile('photo_id')) {
-            // Definieer het opslagtype
+        // controle: is er een nieuwe foto tijdens het opladen?
+        if($request->hasFile('photo_id')){
             $type = 'users';
-            // Haal de originele naam van de geüploade foto op
+            //originele bestandsnaam: bijv dog.jpg
             $originalName = $request->file('photo_id')->getClientOriginalName();
-            // Haal de bestandsextensie op
+            //extensie van dog.jpg = jpg
             $extension = $request->file('photo_id')->getClientOriginalExtension();
-            // Haal de bestandsnaam zonder extensie op
+            // bestandsnaam zonder extensie: dog
             $fileName = pathinfo($originalName, PATHINFO_FILENAME);
-            // Maak een unieke bestandsnaam met de huidige tijd om duplicaten te voorkomen
-            $uniqueName = $fileName . '_' . time() . '.' . $extension;
-            // Sla de nieuwe foto op in de opgegeven opslaglocatie
-            $request->file('photo_id')->storeAs($type, $uniqueName, 'public');
+            $uniqueName = $fileName . '_' .time().'.'.$extension;
+            //opslaan nieuwe foto in de opgegeven bestandslocatie = $type= 'users';
+            $request->file('photo_id')->storeAs($type,$uniqueName,'public');
 
-            // Verkrijg de oude foto, als deze bestaat
+            //verkrijg oude foto als ze bestaat
             $oldPhoto = $user->photo;
-            if ($oldPhoto) {
-                // Verwijder de oude foto uit de opslag
-                Storage::disk('public')->delete($type . '/' . $oldPhoto->file);
-                // Update de fotorecord met de nieuwe bestandsnaam
+            if($oldPhoto){
+                //verwijder uit de opslag
+                //delete = users/1.jpg, database:1.jpg = $oldPhoto->file
+                //database = record 1 met file 1.jpg
+                Storage::disk('public')->delete($type.'/'.$oldPhoto->file);
+                //update het fotorecord met de nieuwe bestandsnaam
+                //1.jpg wordt overschreven met de nieuwe filename,nl. dog_121212.jpg
                 $oldPhoto->update(['file'=>$uniqueName]);
-                // Update de gebruiker met de ID van de bestaande fotorecord
-                $input['photo_id'] = $oldPhoto->id;
-            } else {
-                // Als er geen oude foto is, maak een nieuwe fotorecord aan
-                $photo = Photo::create(['file' => $uniqueName]);
-                // Update de gebruiker met de ID van de nieuwe fotorecord
-                $input['photo_id'] = $photo->id;
+                //update de gebruiker met de id van de bestaande fotorecord
+                $input['photo_id']=$oldPhoto->id;
+            }else{
+                //wanneer er een placeholder is: als er geen oude foto is, maak nu een nieuwe aan
+                $photo = Photo::create(['file'=>$uniqueName]);
+                //update de gebruiker met de id van de bestaande fotorecord
+                $input['photo_id']=$photo->id;
             }
         }
-
-        // Update de gebruiker met de nieuwe gegevens
+        //update user met nieuwe gegevens
         $user->update($input);
-        // Synchroniseer de rollen van de gebruiker (voeg toe of verwijder waar nodig)
-        $user->roles()->sync($request->roles, true);
-
-        // Stuur de gebruiker terug naar de lijst met gebruikers
-        return redirect('/admin/users');
+        //sync rollen
+        $user->roles()->sync($request->roles,true);
+        //stuur de gebruiker terug naar de lijst met gebruikers
+        return redirect('/admin/users')->with('status', 'User updated!');
     }
 
 
@@ -176,5 +175,13 @@ class AdminUsersController extends Controller
     public function destroy(string $id)
     {
         //
+        User::findOrFail($id)->delete();
+        return redirect()->route('users.index');
+        //redirect('/admin/users');
+
+    }
+    public function restore(string $id){
+        User::onlyTrashed()->where('id',$id)->restore();
+        return redirect()->route('users.index');
     }
 }

@@ -29,6 +29,13 @@
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
 <script src="{{asset('js/datatables-simple-demo.js')}}"></script>
+<script>
+    //10 seconden de alert laten staan
+    window.setTimeout(function(){
+       document.querySelector(".alert").style.display='none';
+    },10000);
+</script>
+
 @yield('page-specific-scripts')
 
 </body>

@@ -8,6 +8,16 @@
 @endsection
 @section('content')
     <div class="container-fluid px-4">
+        @if(session('status'))
+            <div class="alert alert-success">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <strong>Success!</strong>{{ session('status') }}
+                    </div>
+                    <a href="" class="btn-close" data-dismiss="alert" aria-label="close" title="close"></a>
+                </div>
+            </div>
+        @endif
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
@@ -25,6 +35,8 @@
                         <th>Active</th>
                         <th>Created</th>
                         <th>Updated</th>
+                        <th>Deleted</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -37,6 +49,8 @@
                         <th>Active</th>
                         <th>Created</th>
                         <th>Updated</th>
+                        <th>Deleted</th>
+                        <th>Actions</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -60,6 +74,16 @@
                                 <td>{{$user->is_active == 1 ? 'Active':'Not Active'}}</td>
                                 <td>{{$user->created_at->diffForHumans()}}</td>
                                 <td>{{$user->updated_at->diffForHumans()}}</td>
+                                <td>{{$user->deleted_at ? $user->deleted_at->diffForHumans() :''}}</td>
+                                <td>
+                                    @if($user->deleted_at != null)
+                                        <a class="btn btn-warning" href="{{route('admin.userrestore',$user->id)}}">Restore</a>
+                                        @else
+                                        {!! Form::open(['method'=>'DELETE','action'=>['\App\Http\Controllers\AdminUsersController@destroy',$user->id]]) !!}
+                                            {!! Form::submit('Delete',['class'=>'btn btn-danger']) !!}
+                                        {!! Form::close() !!}
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     @endif

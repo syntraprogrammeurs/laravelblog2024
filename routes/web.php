@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminUsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,7 @@ Route::get('/', function () {
 });
 Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     Route::resource('users', App\Http\Controllers\AdminUsersController::class);
+    Route::get('{user}/restore',[AdminUsersController::class, 'restore'])->name('admin.userrestore');
 });
 
 
