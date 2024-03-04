@@ -1,6 +1,6 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 <!-- Navbar Brand-->
-<a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+<a class="navbar-brand ps-3" href="index.html">FS DEVELOPERS</a>
 <!-- Sidebar Toggle-->
 <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
         class="fas fa-bars"></i></button>
@@ -17,7 +17,7 @@
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
            aria-expanded="false">
-            <img width="50" height="50" class="rounded-circle border border-2 border-white" src="{{asset(Auth::user()->photo->file ? 'assets/img/users/' . Auth::user()->photo->file : 'http://placeholder.it/30x30')}}" alt="{{Auth::user()->name}}">
+            <img width="50" height="50" class="rounded-circle border border-2 border-white" src="{{asset(Auth::user()->photo ? 'assets/img/users/' . Auth::user()->photo->file : 'http://placeholder.it/30x30')}}" alt="{{Auth::user()->name}}">
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#!">Settings</a></li>

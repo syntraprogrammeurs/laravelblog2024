@@ -9,7 +9,7 @@
 @section('content')
     <div class="container-fluid px-4">
         @if(session('status'))
-            <div class="alert alert-success">
+            <div class="alert alert-{{session('alert-type')}}">
                 <div class="d-flex justify-content-between">
                     <div>
                         <strong>Success!</strong>{{ session('status') }}
@@ -59,8 +59,16 @@
                             <tr>
                                 <td><a href="{{route('users.edit', $user->id)}}">{{$user->id}}</a></td>
                                 <td>
-                                    <img class="rounded-circle border border-3 border-primary p-1" width="62" height="62" src="{{ $user->photo ?  asset('assets/img/users/' .
-                                    $user->photo->file): 'http://placehold.it/62x62'}}" alt="{{$user->name}}">
+                                    <img class="rounded-circle border border-3 border-primary p-1" width="62"
+                                         height="62"
+                                         src="@if ($user->photo && !Str::startsWith($user->photo->file, 'http'))
+            {{ asset('assets/img/users/' . $user->photo->file) }}
+         @else
+            {{ $user->photo->file ?? 'http://placehold.it/62x62' }}
+         @endif"
+                                         alt="{{ $user->name }}">
+
+
                                 </td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
@@ -78,9 +86,9 @@
                                 <td>
                                     @if($user->deleted_at != null)
                                         <a class="btn btn-warning" href="{{route('admin.userrestore',$user->id)}}">Restore</a>
-                                        @else
+                                    @else
                                         {!! Form::open(['method'=>'DELETE','action'=>['\App\Http\Controllers\AdminUsersController@destroy',$user->id]]) !!}
-                                            {!! Form::submit('Delete',['class'=>'btn btn-danger']) !!}
+                                        {!! Form::submit('Delete',['class'=>'btn btn-danger']) !!}
                                         {!! Form::close() !!}
                                     @endif
                                 </td>

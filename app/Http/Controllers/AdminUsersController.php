@@ -165,7 +165,9 @@ class AdminUsersController extends Controller
         //sync rollen
         $user->roles()->sync($request->roles,true);
         //stuur de gebruiker terug naar de lijst met gebruikers
-        return redirect('/admin/users')->with('status', 'User updated!');
+        return redirect('/admin/users')->with('status', 'User updated!')->with('alert-type', 'success');
+
+
     }
 
 
@@ -176,12 +178,12 @@ class AdminUsersController extends Controller
     {
         //
         User::findOrFail($id)->delete();
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('status', 'User Deleted!')->with('alert-type', 'danger');
         //redirect('/admin/users');
 
     }
     public function restore(string $id){
         User::onlyTrashed()->where('id',$id)->restore();
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('status', 'User Restored!')->with('alert-type', 'warning');
     }
 }

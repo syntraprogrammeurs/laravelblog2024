@@ -15,14 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     Route::resource('users', App\Http\Controllers\AdminUsersController::class);
     Route::get('{user}/restore',[AdminUsersController::class, 'restore'])->name('admin.userrestore');
+    Route::get('faq', function () {
+        return view('admin.faq.index');
+    })->name('admin.faq');
 });
 
 
 Auth::routes();
 
-Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin', [App\Http\Controllers\BackendController::class, 'index'])->name('home');

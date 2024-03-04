@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Photo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -29,7 +30,7 @@ class UserFactory extends Factory
             //'is_active'=>1,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            //'photo_id'=>1,
+            'photo_id' => Photo::inRandomOrder()->first()->id, // Willekeurige photo_id
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
