@@ -17,17 +17,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
-Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
-    Route::resource('users', App\Http\Controllers\AdminUsersController::class);
-    Route::get('{user}/restore',[AdminUsersController::class, 'restore'])->name('admin.userrestore');
-    Route::get('usersbc',[AdminUsersController::class,'index2'])->name('users-admin.index2');
+//routes for all users
+Route::group(['prefix'=>'admin','middleware'=>['auth','verified']],function(){
     Route::get('faq', function () {
         return view('admin.faq.index');
     })->name('admin.faq');
-
+});
+//routes for only admin users
+Route::group(['prefix'=>'admin','middleware'=>['admin','verified']],function(){
+    Route::get('admin',[\App\Http\Controllers\BackendController::class,'index']);
+    Route::resource('users', App\Http\Controllers\AdminUsersController::class);
+    Route::get('{user}/restore',[AdminUsersController::class, 'restore'])->name('admin.userrestore');
+    Route::get('usersbc',[AdminUsersController::class,'index2'])->name('users-admin.index2');
 });
 
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 
 Route::get('/admin', [App\Http\Controllers\BackendController::class, 'index'])->name('home');

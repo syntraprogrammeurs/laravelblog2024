@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'name'=>'Tim',
             'is_active'=>1,
-            'email'=>'syntraprogrammeurs@gmail.com',
+            'email'=>'anderemail@gmail.com',
             'photo_id'=>1,
             'password'=> Hash::make('12345678'),
             'created_at'=>Carbon::now(),

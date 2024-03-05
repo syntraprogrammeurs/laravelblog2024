@@ -1,5 +1,5 @@
 <x-admin2>
-<x-heading heading="All Userssssss"></x-heading>
+<x-heading heading="All Users"></x-heading>
 @section('content')
     <div class="container-fluid px-4">
         <x-alert>

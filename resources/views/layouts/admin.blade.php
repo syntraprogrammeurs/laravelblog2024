@@ -9,6 +9,7 @@
         <main>
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Dashboard</h1>
+                <x-alert/>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active"><h1>@yield('title')</h1></li>
                 </ol>
