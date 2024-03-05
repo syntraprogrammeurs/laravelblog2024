@@ -26,6 +26,15 @@ class UsersTableSeeder extends Seeder
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now(),
         ]);
+        DB::table('users')->insert([
+            'name'=>'Tim',
+            'is_active'=>1,
+            'email'=>'syntraprogrammeurs@gmail.com',
+            'photo_id'=>1,
+            'password'=> Hash::make('12345678'),
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now(),
+        ]);
         User::factory()->count(50)->create();
     }
 }

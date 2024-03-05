@@ -20,9 +20,11 @@ Route::get('/', function () {
 Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     Route::resource('users', App\Http\Controllers\AdminUsersController::class);
     Route::get('{user}/restore',[AdminUsersController::class, 'restore'])->name('admin.userrestore');
+    Route::get('usersbc',[AdminUsersController::class,'index2'])->name('users-admin.index2');
     Route::get('faq', function () {
         return view('admin.faq.index');
     })->name('admin.faq');
+
 });
 
 

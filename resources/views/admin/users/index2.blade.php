@@ -1,16 +1,10 @@
-@extends('layouts.admin')
-@section('title')
-    Users
-@endsection
-@section('cards')
-@endsection
-@section('charts')
-@endsection
+<x-admin2>
+<x-heading heading="All Userssssss"></x-heading>
 @section('content')
     <div class="container-fluid px-4">
-        @if(session('status'))
-            <x-alert/>
-        @endif
+        <x-alert>
+
+        </x-alert>
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
@@ -94,5 +88,5 @@
         </div>
     </div>
 @endsection
-
+</x-admin2>
 

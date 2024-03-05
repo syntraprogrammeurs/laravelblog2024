@@ -8,7 +8,7 @@
 @endsection
 @section('content')
     <div class="container-fluid px-4">
-    {!! Form::open(['method'=>'POST', 'action'=>'App\Http\Controllers\AdminUsersController@store','files'=>true]) !!}
+        {!! Form::open(['method'=>'POST', 'action'=>'App\Http\Controllers\AdminUsersController@store','files'=>true]) !!}
         <div class="form-group">
             {!! Form::label('name', 'Name:') !!}
             {!! Form::text('name',null,['class'=>'form-control']) !!}
@@ -36,7 +36,7 @@
         <div class="form-group">
             {!! Form::submit('Create User',['class'=>'btn btn-primary'])!!}
         </div>
-    {!! Form::close() !!}
-        @include('layouts.includes.form_error')
+        {!! Form::close() !!}
+        @include('partials.form_error')
     </div>
 @endsection

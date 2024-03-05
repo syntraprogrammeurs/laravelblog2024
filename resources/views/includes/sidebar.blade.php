@@ -22,6 +22,7 @@
                      data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="{{route('users.index')}}">All Users</a>
+                        <a class="nav-link" href="{{route('users-admin.index2')}}">All Users BC</a>
                         <a class="nav-link" href="{{route('users.create')}}">Create User</a>
                     </nav>
                 </div>

@@ -9,14 +9,14 @@
 @section('content')
     <div class="container-fluid px-4">
         <div class="row">
-            @include('layouts.includes.form_error')
+            @include('partials.form_error')
             <div class="col-8 img-thumbnail">
                 {!! Form::open(['method'=>'PATCH', 'action'=>['App\Http\Controllers\AdminUsersController@update',$user->id],'files'=>true]) !!}
                 <div class="form-group">
                     {!! Form::label('name', 'Name:') !!}
                     {!! Form::text('name',$user->name,['class'=>'form-control']) !!}
                     @error('name')
-                        <p class="text-danger fs-6">{{$message}}</p>
+                    <p class="text-danger fs-6">{{$message}}</p>
                     @enderror
                 </div>
                 <div class="form-group">

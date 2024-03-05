@@ -33,6 +33,13 @@ class AdminUsersController extends Controller
         //manier 2
         //return view('admin.users.index',compact('users','roles));
     }
+    public function index2()
+    {
+        $users = User::orderByDesc('id')->withTrashed()->get();
+        $roles = Role::all();
+        return view('admin.users.index2',['users'=>$users, 'roles'=>$roles]);
+
+    }
 
     /**
      * Show the form for creating a new resource.
