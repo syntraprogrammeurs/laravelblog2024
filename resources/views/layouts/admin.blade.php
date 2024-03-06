@@ -15,8 +15,11 @@
                 </ol>
 {{--                @yield('cards', View::make('layouts.partials.cards'))--}}
 {{--                @yield('charts', View::make('layouts.partials.charts'))--}}
-                <x-card></x-card>
-                <x-chart></x-chart>
+                @section('graph')
+                    <x-card></x-card>
+                    <x-chart></x-chart>
+                @show
+
             </div>
             @yield('content')
         </main>

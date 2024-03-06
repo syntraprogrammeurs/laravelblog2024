@@ -17,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+Route::get('/contact', function(){
+    return view('contact');
+});
+//get = voor formulierweergave op de link
+Route::get('contact','App\Http\Controllers\ContactController@create');
+//post = is voor submitten van de gegevens op het formulier
+Route::post('contact','App\Http\Controllers\ContactController@store');
+
+
 //routes for all users
 Route::group(['prefix'=>'admin','middleware'=>['auth','verified']],function(){
     Route::get('faq', function () {

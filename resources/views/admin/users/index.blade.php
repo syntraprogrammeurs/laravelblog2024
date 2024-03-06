@@ -2,9 +2,7 @@
 @section('title')
     Users
 @endsection
-@section('cards')
-@endsection
-@section('charts')
+@section('graph')
 @endsection
 @section('content')
     <div class="container-fluid px-4">
