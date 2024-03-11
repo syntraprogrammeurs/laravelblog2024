@@ -2,12 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Photo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
 
-class PhotosTableSeeder extends Seeder
+class PostsTabelSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +13,5 @@ class PhotosTableSeeder extends Seeder
     public function run(): void
     {
         //
-        Storage::disk('public')->deleteDirectory('posts');
-     Photo::factory(10)->create();
     }
 }

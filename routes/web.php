@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +33,8 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','verified']],function(){
     Route::get('faq', function () {
         return view('admin.faq.index');
     })->name('admin.faq');
+    Route::resource('posts',PostController::class);
+    Route::resource('categories', CategoryController::class);
 });
 //routes for only admin users
 Route::group(['prefix'=>'admin','middleware'=>['admin','verified']],function(){

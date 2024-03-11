@@ -24,7 +24,10 @@ class AdminUsersController extends Controller
     {
         //admin/users/index
         //ELOQUENT ORM
-        $users = User::orderByDesc('id')->withTrashed()->get();
+        $users = User::with(['roles','photo'])
+            ->orderByDesc('id')
+            ->withTrashed()
+            ->get();
         //onderstaande lijn is enkel voor standaard html tabellen die ook een paginering wensen. Dus dit wordt niet gebruikt met de javascript datatables.
         //$users = User::orderByDesc('id')->withTrashed()->paginate(3);
         //$users = DB::table('users')->get(); //DB FACADE
