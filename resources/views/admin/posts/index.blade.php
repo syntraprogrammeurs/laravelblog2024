@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    Posts
+    Posts | <span class="rounded bg-primary text-white display-6">{{$allPosts->total()}}</span>
 @endsection
 @section('graph')
 @endsection
@@ -9,6 +9,11 @@
         @if(session('status'))
             <x-alert/>
         @endif
+        <div class="d-flex">
+            <a href="{{route('posts.index')}}" class="btn btn-dark m-2 rounded-end-pill me-1"><i class="fa-solid fa-house"></i> Home</a>
+            <a href=#" class="btn btn-primary m-2 rounded-end-pill"><i class="fa-solid fa-plus"></i> Add Post</a>
+        </div>
+
         <table class="table table-striped shadow-lg p-3 mb-5 bg-body-tertiary rounded">
             <thead>
                 <tr>
@@ -35,7 +40,10 @@
                             {{$post->photo->file ?? 'http://placehold.it/62x62'}}
                            @endif" alt="{{$post->title}}">
                         </td>
-                        <td>@if ($post->user_id && $post->user)                                           {{$post->user->name}}
+                        <td>@if ($post->user_id && $post->user)
+                                <a href="{{route('authors', $post->user->name)}}">
+                                    {{$post->user->name}}
+                                </a>
                             @else
                                 <p class="text-danger">
                                     {{$post->user()->withTrashed()->first() ? $post->user()->withTrashed()->first()->name : "no name"}}</p>
@@ -48,7 +56,28 @@
                         </td>
                         <td>{{$post->title}}</td>
                         <td>{{Str::limit($post->body,20)}}</td>
-                        <td>{{$post->created_at ? $post->created_at->diffForHumans() : ''}}</td>                        <td>{{$post->updated_at ? $post->updated_at->diffForHumans() : ''}}</td>                        <td>{{$post->deleted_at ? $post->deleted_at->diffForHumans() : ''}}</td>                        <td>Actions</td>
+                        <td>{{$post->created_at ? $post->created_at->diffForHumans() : ''}}</td>                        <td>{{$post->updated_at ? $post->updated_at->diffForHumans() : ''}}</td>                        <td>{{$post->deleted_at ? $post->deleted_at->diffForHumans() : ''}}</td>
+                        <td>
+                            <div class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" id="postDropdown{{$post->id}}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </a>
+                                <div class="dropdown-menu shadow" aria-labelledby="postDropdown{{$post->id}}">
+                                    <a href="{{route('posts.show',$post)}}" class="dropdown-item">
+                                        <i class="fa-solid fa-eye"></i>
+                                        Show
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        Edit
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="fa-solid fa-trash"></i>
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

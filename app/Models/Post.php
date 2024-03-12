@@ -22,5 +22,12 @@ class Post extends Model
     public function photo(){
         return $this->belongsTo(Photo::class);
     }
+    /** filter (queryscope) */
+    public function scopeFilter($query){
+        if(request('search')){
+            $query->where('title', 'like', '%'. request('search') . '%')
+                ->orWhere('body','like', '%'. request('search') . '%');
+        }
+    }
 
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,7 @@ Route::get('/', function () {
 Route::get('/contact', function(){
     return view('contact');
 });
+
 //get = voor formulierweergave op de link
 Route::get('contact','App\Http\Controllers\ContactController@create');
 //post = is voor submitten van de gegevens op het formulier
@@ -35,6 +37,11 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','verified']],function(){
     })->name('admin.faq');
     Route::resource('posts',PostController::class);
     Route::resource('categories', CategoryController::class);
+    Route::get('authors/{author:name}',function(User $author){
+       $allPosts = $author->posts()->paginate(20);
+       return view('admin.posts.index',compact('allPosts'));
+    })->name('authors');
+
 });
 //routes for only admin users
 Route::group(['prefix'=>'admin','middleware'=>['admin','verified']],function(){

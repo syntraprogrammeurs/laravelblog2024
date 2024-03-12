@@ -13,7 +13,7 @@ class PostController extends Controller
     public function index()
     {
         //
-        $allPosts = Post::with(['categories','user','photo'])->paginate(50);
+        $allPosts = Post::with(['categories','user','photo'])->filter()->paginate(50);
         return view('admin.posts.index',compact('allPosts'));
     }
 
@@ -37,9 +37,17 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
+//    public function show($id) //tem laravel 7
+//    {
+//        //
+//        $post = Post::findOrFail($id);
+//        return view('admin.posts.show',compact('post'));
+//    }
+
     public function show(Post $post)
     {
         //
+        return view('admin.posts.show',compact('post'));
     }
 
     /**
