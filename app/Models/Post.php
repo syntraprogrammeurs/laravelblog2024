@@ -23,11 +23,32 @@ class Post extends Model
         return $this->belongsTo(Photo::class);
     }
     /** filter (queryscope) */
-    public function scopeFilter($query){
-        if(request('search')){
-            $query->where('title', 'like', '%'. request('search') . '%')
-                ->orWhere('body','like', '%'. request('search') . '%');
-        }
-    }
 
+    public static function getFillableFields(){
+        return (new self())->fillable;
+    }
+    public function scopeFilter($query,$searchTerm=null, $searchFields=[]){
+        //dd($searchFields);
+        //is er een zoekterm
+       if($searchTerm){
+           //zijn er velden aangevinkt
+           if($searchFields){
+               //zoek de zoekterm in de opgegeven velden
+               $query->where(function($query) use ($searchFields,$searchTerm){
+                  foreach($searchFields as $field){
+                      $query->orWhere($field, 'like', '%' . $searchTerm . '%');
+                  }
+               });
+           }else{
+               //zoek de zoekterm in alle velden die gevuld kunnen worden
+               $query->where(function($query) use ($searchTerm){
+                   $searchFields = (new self())->getFillableFields();
+                   foreach($searchFields as $field){
+                       $query->orWhere($field, 'like', '%' . $searchTerm . '%');
+                   }
+               });
+           }
+       }
+        return $query;
+    }
 }

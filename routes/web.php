@@ -37,11 +37,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','verified']],function(){
     })->name('admin.faq');
     Route::resource('posts',PostController::class);
     Route::resource('categories', CategoryController::class);
-    Route::get('authors/{author:name}',function(User $author){
-       $allPosts = $author->posts()->paginate(20);
-       return view('admin.posts.index',compact('allPosts'));
-    })->name('authors');
-
+    Route::get('authors/{author:name}',[PostController::class,'indexByAuthor'])->name('authors');
 });
 //routes for only admin users
 Route::group(['prefix'=>'admin','middleware'=>['admin','verified']],function(){

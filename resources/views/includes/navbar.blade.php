@@ -8,7 +8,18 @@
 <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
     <div class="input-group">
         <input name="search" class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-               aria-describedby="btnNavbarSearch"/>
+               aria-describedby="btnNavbarSearch" value="{{old('search')}}"/>
+        @if(isset($fillableFields) && !empty($fillableFields))
+            <div class="d-flex bg-white align-items-center">
+                @foreach($fillableFields as $fillableField)
+                    <div class="form-check me-2">
+                        <input type="checkbox" class="form-check-input" value="{{$fillableField}}" id="{{$fillableField}}" name="fields[]">
+                        <label for="{{$fillableField}}" class="form-check-label">{{ucfirst($fillableField)}}</label>
+
+                    </div>
+                @endforeach
+            </div>
+        @endif
         <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
     </div>
 </form>

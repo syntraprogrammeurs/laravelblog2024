@@ -36,19 +36,27 @@
                             <li>Open .env.example en hernoem deze naar .env</li>
                             <li>in je .env bestand pas je database aan naar bijvoorbeeld <strong>dblaravelmyrepo</strong></li>
                             <li>in je terminal typ: php artisan key:generate</li>
+                            <li>Vooraleer je migrate en je werkt met windows eerst faker aanpassen in je vendor/fakerphp/src/Faker/Providers/Image.php
+                                <ul>
+                                    <li>rond lijn 145 zoek je naar: curl_setopt($ch, CURLOPT_FILE, $fp);</li>
+                                    <li>en daaronder zet je deze lijnen: curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);//new line
+                                        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);//new line</li></li>
+                                </ul>
+                            </li>
+                            <li>Vooraleer je migrate en je werkt met symlink eerst stap 2 uitvoeren</li>
                             <li>php migrate:fresh --seed</li>
 
                         </ol>
                         <p>Stap 2 (Optioneel)</p>
                         <p>Wanneer je met images werkt via de symlink, dan dien je onderstaande uit te voeren</p>
                         <ol>
+                            <li>wanneer de img folder nog in je public/assets folder staat dien je deze eerste hardcoded te wissen</li>
                             <li>php artisan config:clear</li>
-                            <li>php artisan cache:clear</li>
-                            <li>pho artisan view:clear</li>
-                            <li>php artisan route:clear</li>
                             <li>php artisan storage:unlink</li>
                             <li>php artisan storage:link</li>
                         </ol>
+
+
                     </div>
                 </div>
             </div>

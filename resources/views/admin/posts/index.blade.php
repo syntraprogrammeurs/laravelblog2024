@@ -11,7 +11,7 @@
         @endif
         <div class="d-flex">
             <a href="{{route('posts.index')}}" class="btn btn-dark m-2 rounded-end-pill me-1"><i class="fa-solid fa-house"></i> Home</a>
-            <a href=#" class="btn btn-primary m-2 rounded-end-pill"><i class="fa-solid fa-plus"></i> Add Post</a>
+            <a href="{{route('posts.create')}}" class="btn btn-primary m-2 rounded-end-pill"><i class="fa-solid fa-plus"></i> Add Post</a>
         </div>
 
         <table class="table table-striped shadow-lg p-3 mb-5 bg-body-tertiary rounded">

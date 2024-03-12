@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -13,8 +17,11 @@ class PostController extends Controller
     public function index()
     {
         //
-        $allPosts = Post::with(['categories','user','photo'])->filter()->paginate(50);
-        return view('admin.posts.index',compact('allPosts'));
+        $allPosts = Post::with(['categories','user','photo'])->filter(request('search'),request('fields'))->paginate(50);
+        return view('admin.posts.index',[
+            'allPosts'=>$allPosts,
+            'fillableFields'=>Post::getFillableFields()
+        ]);
     }
 
     /**
@@ -23,7 +30,8 @@ class PostController extends Controller
     public function create()
     {
         //
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -32,6 +40,27 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+        request()->validate([
+           'title'=>['required', 'between:5,255'],
+           'categories'=>['required', Rule::exists('categories', 'id')],
+           'body'=>'required'
+        ],[
+            'title.required'=> 'Titel is required',
+            'title.between'=> 'Title between 5 and 255 char required',
+            'body.required'=> 'Message is required',
+            'categories.required'=> 'Please check minimum one category'
+        ]);
+
+        //post_id, user_id, title, body
+        $post = new Post();
+        $post->user_id = Auth::user()->id;
+        $post->title = $request->title;
+        $post->body = $request->body;
+
+        //photo
+        if($file = $request->file('photo_id')){
+
+        }
     }
 
     /**
@@ -73,4 +102,11 @@ class PostController extends Controller
     {
         //
     }
+
+    public function indexByAuthor(User $author){
+        $allPosts = $author->posts()->paginate(20);
+        return view('admin.posts.index',compact('allPosts'));
+    }
+
+
 }
