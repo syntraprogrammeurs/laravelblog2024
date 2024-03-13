@@ -13,7 +13,7 @@
             <div class="d-flex bg-white align-items-center">
                 @foreach($fillableFields as $fillableField)
                     <div class="form-check me-2">
-                        <input type="checkbox" class="form-check-input" value="{{$fillableField}}" id="{{$fillableField}}" name="fields[]">
+                        <input type="checkbox" class="form-check-input" value="{{$fillableField}}" id="{{$fillableField}}" name="fields[]" {{in_array($fillableField, (array)Request::get('fields',[])) ? 'checked': ''}}>
                         <label for="{{$fillableField}}" class="form-check-label">{{ucfirst($fillableField)}}</label>
 
                     </div>

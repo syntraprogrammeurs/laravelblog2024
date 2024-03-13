@@ -13,6 +13,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $categories = Category::withTrashed()->paginate(50);
+            return view('admin.categories.index',compact($categories));
     }
 
     /**
@@ -21,6 +23,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        return view('admin.posts.create');
     }
 
     /**
@@ -29,6 +32,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        request()->validate([
+            'name'=>['required', 'between:1,255'],
+        ],[
+            'name.required'=> 'Name is required',
+        ]);
+        Category::create($request);
+        return view('admin.categories');
     }
 
     /**
@@ -37,6 +47,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
+        return view('admin.categories.show',compact('category'));
     }
 
     /**
@@ -45,6 +56,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //
+          return view('admin.posts.edit', compact('category'));
     }
 
     /**
@@ -53,6 +65,13 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
+        request()->validate([
+            'name'=>['required', 'between:1,255'],
+        ],[
+            'name.required'=> 'Name is required',
+        ]);
+        Category::updating($request);
+        return view('admin.categories');
     }
 
     /**
@@ -61,5 +80,12 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+        try{
+            $category->delete();
+        }catch(ModelNotFoundException $error){
+            return response()->json(['message'=>'Category not found'], 404);
+        }
+        return redirect()->route('categories.index')->with('status', 'Category Deleted!')->with('alert-type', 'danger');
+        //redirect('/admin/posts');
     }
 }

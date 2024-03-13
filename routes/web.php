@@ -36,12 +36,13 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','verified']],function(){
         return view('admin.faq.index');
     })->name('admin.faq');
     Route::resource('posts',PostController::class);
+    Route::get('{posts}/restore', [PostController::class,'restore'])->name('postrestore');
     Route::resource('categories', CategoryController::class);
     Route::get('authors/{author:name}',[PostController::class,'indexByAuthor'])->name('authors');
 });
 //routes for only admin users
 Route::group(['prefix'=>'admin','middleware'=>['admin','verified']],function(){
-    Route::get('admin',[\App\Http\Controllers\BackendController::class,'index']);
+    Route::get('/dashboard',[\App\Http\Controllers\BackendController::class,'index'])->name('admin.index');
     Route::resource('users', App\Http\Controllers\AdminUsersController::class);
     Route::get('{user}/restore',[AdminUsersController::class, 'restore'])->name('admin.userrestore');
     Route::get('usersbc',[AdminUsersController::class,'index2'])->name('users-admin.index2');
