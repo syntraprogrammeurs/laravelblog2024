@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    Posts | <span class="rounded bg-primary text-white display-6">{{$allPosts->total()}}</span>
+    Posts
 @endsection
 @section('graph')
 @endsection

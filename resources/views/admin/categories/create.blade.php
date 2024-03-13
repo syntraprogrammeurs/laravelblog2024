@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    Edit Category
+    Create Category
 @endsection
 @section('cards')
 @endsection
@@ -8,16 +8,16 @@
 @endsection
 @section('content')
     <div class="container-fluid px-4">
-        <form action="{{action('App\Http\Controllers\CategoryController@update', $category)}}" method="POST">
+        <form action="{{action('App\Http\Controllers\CategoryController@store')}}" method="POST">
             @csrf
-            @method('PATCH')
+            @method('POST')
             <div class="form-group mb-3">
-                <input type="text" name="name" class="form-control" placeholder="Name" value="{{$category->name}}">
+                <input type="text" name="name" class="form-control" placeholder="Title">
                 @error('name')
                 <p class="text-danger fs-6">{{$message}}</p>
                 @enderror
             </div>
-            <button type="submit" class="ms-auto btn btn-dark d-flex justify-content-end me-3">UPDATE</button>
+            <button type="submit" class="ms-auto btn btn-dark d-flex justify-content-end me-3">SUBMIT</button>
         </form>
         @include('partials.form_error')
     </div>

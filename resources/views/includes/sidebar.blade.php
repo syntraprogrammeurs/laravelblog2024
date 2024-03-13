@@ -42,6 +42,19 @@
                         <a class="nav-link" href="{{route('posts.create')}}">Create Post</a>
                     </nav>
                 </div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsCategories"
+                   aria-expanded="false" aria-controls="collapseLayoutsCategories">
+                    <div class="sb-nav-link-icon"><i class="fa-regular fa-message"></i></div>
+                    Categories
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayoutsCategories" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{route('categories.index')}}">All Categories</a>
+                        <a class="nav-link" href="{{route('categories.create')}}">Create Category</a>
+                    </nav>
+                </div>
 
 
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"

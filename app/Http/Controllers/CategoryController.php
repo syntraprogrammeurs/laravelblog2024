@@ -14,7 +14,7 @@ class CategoryController extends Controller
     {
         //
         $categories = Category::withTrashed()->paginate(50);
-            return view('admin.categories.index',compact($categories));
+        return view('admin.categories.index',compact('categories'));
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        return view('admin.posts.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -56,7 +56,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //
-          return view('admin.posts.edit', compact('category'));
+          return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -65,13 +65,18 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
-        request()->validate([
-            'name'=>['required', 'between:1,255'],
-        ],[
-            'name.required'=> 'Name is required',
+        // Voer validatie direct in de methode uit
+        $validatedData = $request->validate([
+            'name' => ['required', 'between:1,255'],
+        ], [
+            'name.required' => 'Name is required',
         ]);
-        Category::updating($request);
-        return view('admin.categories');
+
+        // Update de categorie met gevalideerde data
+        $category->update($validatedData);
+
+        // Redirect naar een pagina (bijvoorbeeld de lijst met categorieën) met een succesmelding
+        return redirect()->route('categories.index')->with('status', 'Category updated');
     }
 
     /**
@@ -80,12 +85,14 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
-        try{
-            $category->delete();
-        }catch(ModelNotFoundException $error){
-            return response()->json(['message'=>'Category not found'], 404);
-        }
-        return redirect()->route('categories.index')->with('status', 'Category Deleted!')->with('alert-type', 'danger');
-        //redirect('/admin/posts');
+        $category->delete();
+
+        return redirect()->route('categories.index')->with('status', 'Category Deleted!');
     }
+    public function restore(Category $category)
+    {
+        $category->onlyTrashed()->restore();
+        return redirect()->route('categories.index')->with('status', 'Category Restored!')->with('alert-type', 'warning');
+    }
+
 }

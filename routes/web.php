@@ -36,8 +36,9 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','verified']],function(){
         return view('admin.faq.index');
     })->name('admin.faq');
     Route::resource('posts',PostController::class);
-    Route::get('{posts}/restore', [PostController::class,'restore'])->name('postrestore');
+    Route::get('posts/{posts}/restore', [PostController::class,'restore'])->name('postrestore');
     Route::resource('categories', CategoryController::class);
+    Route::get('categories/{categories}/restore',[CategoryController::class, 'restore'])->name('categoryrestore');
     Route::get('authors/{author:name}',[PostController::class,'indexByAuthor'])->name('authors');
 });
 //routes for only admin users
