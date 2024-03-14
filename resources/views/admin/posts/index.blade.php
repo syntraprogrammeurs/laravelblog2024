@@ -69,7 +69,7 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </a>
                             <div class="dropdown-menu shadow" aria-labelledby="postDropdown{{$post->id}}">
-                                <a href="{{route('posts.show',$post)}}" class="dropdown-item">
+                                <a href="{{route('posts.show',$post->slug)}}" class="dropdown-item">
                                     <i class="fa-solid fa-eye"></i>
                                     Show
                                 </a>

@@ -35,7 +35,8 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','verified']],function(){
     Route::get('faq', function () {
         return view('admin.faq.index');
     })->name('admin.faq');
-    Route::resource('posts',PostController::class);
+    Route::resource('posts',PostController::class,['except'=>['show']]);
+    Route::get('posts/{post:slug}',[PostController::class,'show'])->name('posts.show');
     Route::get('posts/{posts}/restore', [PostController::class,'restore'])->name('postrestore');
     Route::resource('categories', CategoryController::class);
     Route::get('categories/{categories}/restore',[CategoryController::class, 'restore'])->name('categoryrestore');

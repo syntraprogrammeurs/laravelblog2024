@@ -11,7 +11,7 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
     //niet: id, timestamps, softdelete
-    protected $fillable=['photo_id','user_id', 'title', 'body'];
+    protected $fillable=['photo_id','user_id', 'title','slug', 'body'];
 
     public function categories(){
         return $this->belongsToMany(Category::class);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UsersSoftDelete;
 use App\Http\Requests\UsersRequest;
 use App\Models\Photo;
 use App\Models\Role;
@@ -184,13 +185,22 @@ class AdminUsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+//    public function destroy(string $id)
+//    {
+//        //
+//        $user = User::findOrFail($id)->delete();
+//        UsersSoftDelete::dispatch($user);
+//        return redirect()->route('users.index')->with('status', 'User Deleted!')->with('alert-type', 'danger');
+//        //redirect('/admin/users');
+//
+//    }
+    public function destroy(User $user)
     {
         //
-        User::findOrFail($id)->delete();
+        $user->delete();
+        UsersSoftDelete::dispatch($user);
         return redirect()->route('users.index')->with('status', 'User Deleted!')->with('alert-type', 'danger');
         //redirect('/admin/users');
-
     }
     public function restore(string $id){
         User::onlyTrashed()->where('id',$id)->restore();
