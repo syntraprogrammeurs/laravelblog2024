@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Slugify;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,6 +11,7 @@ class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use Slugify;
     //niet: id, timestamps, softdelete
     protected $fillable=['photo_id','user_id', 'title','slug', 'body'];
 
@@ -21,6 +23,10 @@ class Post extends Model
     }
     public function photo(){
         return $this->belongsTo(Photo::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(PostComment::class);
     }
     /** filter (queryscope) */
 

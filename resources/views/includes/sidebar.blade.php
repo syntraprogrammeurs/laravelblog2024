@@ -55,6 +55,18 @@
                         <a class="nav-link" href="{{route('categories.create')}}">Create Category</a>
                     </nav>
                 </div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsComments"
+                   aria-expanded="false" aria-controls="collapseLayoutsComments">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-comment"></i></div>
+                    Comments
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayoutsComments" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{route('comments.index')}}">All Comments</a>
+                    </nav>
+                </div>
 
 
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"

@@ -53,6 +53,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function photo(){
         return $this->belongsTo(Photo::class);
     }
+    public function comments(){
+        return $this->hasMany(PostComment::class);
+    }
     public function isAdmin(){
         foreach($this->roles as $role){
             if($role->name == 'administrator' && $this->is_active==1){

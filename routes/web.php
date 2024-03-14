@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -35,12 +36,17 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','verified']],function(){
     Route::get('faq', function () {
         return view('admin.faq.index');
     })->name('admin.faq');
+    //posts
     Route::resource('posts',PostController::class,['except'=>['show']]);
     Route::get('posts/{post:slug}',[PostController::class,'show'])->name('posts.show');
     Route::get('posts/{posts}/restore', [PostController::class,'restore'])->name('postrestore');
+    //post comments
+    Route::resource('comments',PostCommentController::class);
+    //categories
     Route::resource('categories', CategoryController::class);
     Route::get('categories/{categories}/restore',[CategoryController::class, 'restore'])->name('categoryrestore');
     Route::get('authors/{author:name}',[PostController::class,'indexByAuthor'])->name('authors');
+
 });
 //routes for only admin users
 Route::group(['prefix'=>'admin','middleware'=>['admin','verified']],function(){

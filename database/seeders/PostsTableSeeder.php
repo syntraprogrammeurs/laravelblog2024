@@ -16,8 +16,8 @@ class PostsTableSeeder extends Seeder
     public function run(): void
     {
         //
-        $chunkSize = 1000;
-        $postCount = 5000;
+        $chunkSize = 100;
+        $postCount = 500;
 
       $posts = Post::factory()->count($postCount)->make();
       $chunks = array_chunk($posts->toArray(), $chunkSize);

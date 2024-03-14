@@ -106,7 +106,8 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
-        return view('admin.posts.show',compact('post'));
+        $slug = $post->slugify($post->title);
+        return view('admin.posts.show',compact('slug','post'));
     }
 
     /**
