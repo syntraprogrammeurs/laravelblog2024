@@ -32,12 +32,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
-        request()->validate([
+        $validatedData = request()->validate([
             'name'=>['required', 'between:1,255'],
         ],[
             'name.required'=> 'Name is required',
         ]);
-        Category::create($request);
+        Category::create($validatedData);
         return view('admin.categories');
     }
 
