@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
 use App\Models\User;
@@ -18,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/', [FrontendController::class,'index'])->name('frontend.home');
+Route::get('post/{slug}', [PostController::class,'post'])->name('frontend.post');
+
 Route::get('/contact', function(){
     return view('contact');
 });
@@ -29,6 +30,8 @@ Route::get('/contact', function(){
 Route::get('contact','App\Http\Controllers\ContactController@create');
 //post = is voor submitten van de gegevens op het formulier
 Route::post('contact','App\Http\Controllers\ContactController@store');
+
+
 
 
 //routes for all users

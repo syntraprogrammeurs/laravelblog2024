@@ -204,5 +204,10 @@ class PostController extends Controller
         //Post::onlyTrashed()->where('id',$id)->restore();
         return redirect()->route('posts.index')->with('status', 'Post Restored!')->with('alert-type', 'warning');
     }
+    //frontend.post
+    public function post($id){
+        $post = Post::findOrFail($id);
 
+        return view('post',compact('post'));
+    }
 }
