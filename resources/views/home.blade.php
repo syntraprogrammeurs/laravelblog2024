@@ -16,7 +16,6 @@
                         @foreach($postTicker->categories as $postCategory)
                             <a href="#">{{$postCategory->name}}</a>
                         @endforeach
-
                     </div>
                     <h3><a href="#" class="font-pt">{{$postTicker->title}}</a></h3>
                     <div class="date">
