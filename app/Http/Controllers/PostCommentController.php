@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\PostComment;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class PostCommentController extends Controller
     public function index()
     {
         //
-        $comments = PostComment::orderBy('post_id', 'asc')
+        $comments = PostComment::with(['user','post'])
+            ->orderBy('post_id', 'asc')
             ->orderBy('parent_id','asc')
             ->orderBy('id','asc')
             ->paginate(20);
@@ -39,10 +41,12 @@ class PostCommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PostComment $postComment)
+    public function show(PostComment $comment)
     {
         //
-        return view('admin.comments.show',compact('postComment'));
+        $post = Post::findOrFail($comment->post_id);
+
+        return view('admin.comments.show',compact('comment','post'));
     }
 
     /**
@@ -52,6 +56,7 @@ class PostCommentController extends Controller
     {
 
         //
+
         return view('admin.comments.edit', $postComment);
     }
 

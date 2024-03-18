@@ -32,7 +32,7 @@
             @foreach($comments as $comment)
                 <tr>
                     <td>
-                        <a href="{{route('posts.show', $comment->post->id)}}">
+                        <a href="{{route('posts.show', $comment->post->slug)}}">
                             {{$comment->post->id}}
                         </a>
 

@@ -24,6 +24,20 @@
                <p class="mt-3">{{$post->body}}</p>
            </div>
        </div>
+            <div class="comments-section">
+                <h2>Comments</h2>
+                @if($post->comments->isNotEmpty())
+                    <div class="accordion" id="commentsAccordion">
+                        @foreach($post->comments as $comment)
+                            @if($comment->parent_id == null) {{-- Laat alleen top-level comments zien --}}
+                            @include('components.comment', ['comment' => $comment])
+                            @endif
+                        @endforeach
+                    </div>
+                @else
+                    <p>No comments yet.</p>
+                @endif
+            </div>
     </div>
 @endsection
 
