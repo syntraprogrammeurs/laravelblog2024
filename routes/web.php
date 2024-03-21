@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
+use App\Livewire\Counter;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,7 @@ Route::get('contact','App\Http\Controllers\ContactController@create');
 //post = is voor submitten van de gegevens op het formulier
 Route::post('contact','App\Http\Controllers\ContactController@store');
 
+Route::get('/counter', Counter::class);
 
 
 

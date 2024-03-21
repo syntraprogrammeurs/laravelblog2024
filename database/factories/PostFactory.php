@@ -4,7 +4,10 @@ namespace Database\Factories;
 
 use App\Models\Photo;
 use App\Models\User;
+
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -30,7 +33,7 @@ class PostFactory extends Factory
             'photo_id'=>fake()->randomElement($photoIds),
             'title'=>$title,
             'slug'=>$slug,
-            'body'=>fake()->paragraph()
+            'body'=>fake()->paragraphs(20, true),
         ];
     }
 }

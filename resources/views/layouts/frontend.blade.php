@@ -20,6 +20,11 @@
 
     <!-- Responsive CSS -->
     <link href="{{asset('css/responsive.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="css/core-style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Responsive CSS -->
+    <link href="css/responsive.css" rel="stylesheet">
 
 </head>
 

@@ -8,7 +8,7 @@
                     {{asset('assets/img/posts/'.$postTicker->photo->file)}}
                 @else
                     {{$postTicker->photo->file ?? 'http://placehold.it/400x400'}}
-                @endif") alt="{{$postTicker->title}}">
+                @endif" ) alt="{{$postTicker->title}}">
 
                 <!-- Single Blog Post Content -->
                 <div class="single-blog-post-content">
@@ -33,16 +33,20 @@
             <div class="marquee">
                 <ul class="marquee-content-items">
                     <li>
-                        <a href="#"><span class="latest-news-time">10:40</span> The Facebook Live stream that could presage TV</a>
+                        <a href="#"><span class="latest-news-time">10:40</span> The Facebook Live stream that could
+                            presage TV</a>
                     </li>
                     <li>
-                        <a href="#"><span class="latest-news-time">11:02</span> Opinion: It's time to start talking about impeachment</a>
+                        <a href="#"><span class="latest-news-time">11:02</span> Opinion: It's time to start talking
+                            about impeachment</a>
                     </li>
                     <li>
-                        <a href="#"><span class="latest-news-time">12:37</span> Clinton aims to shore up Wisconsin with new TV ads</a>
+                        <a href="#"><span class="latest-news-time">12:37</span> Clinton aims to shore up Wisconsin with
+                            new TV ads</a>
                     </li>
                     <li>
-                        <a href="#"><span class="latest-news-time">13:59</span> Trump signs tax bill before leaving for Mar-a-Lago</a>
+                        <a href="#"><span class="latest-news-time">13:59</span> Trump signs tax bill before leaving for
+                            Mar-a-Lago</a>
                     </li>
                 </ul>
             </div>
@@ -59,20 +63,30 @@
                     <div class="gazette-welcome-post">
                         <!-- Post Tag -->
                         <div class="gazette-post-tag">
-                            <a href="#">Politices</a>
+                            <a href="#">
+                                @foreach($featuredPost->categories as $postCategory)
+                                    <a href="#">{{$postCategory->name}}</a>
+                                @endforeach
+                            </a>
                         </div>
-                        <h2 class="font-pt">What's behind the world obsession with gems?</h2>
-                        <p class="gazette-post-date">March 29, 2016</p>
+                        <h2 class="font-pt">{{$featuredPost->title}}</h2>
+                        <p class="gazette-post-date">{{$featuredPost->created_at ? $featuredPost->created_at->diffForhumans() : 'no date'}}</p>
                         <!-- Post Thumbnail -->
                         <div class="blog-post-thumbnail my-5">
-                            <img src="{{asset('assets/img/imgfront/blog-img/1.jpg')}}" alt="post-thumb">
+                            <img src="@if ($featuredPost->photo && !Str::startsWith($featuredPost->photo->file, 'http'))
+                                            {{ asset('assets/img/posts/' . $featuredPost->photo->file) }}
+                                        @else
+                                            {{ $featuredPost->photo->file ?? 'http://placehold.it/62x62' }}
+                                       @endif" alt="post-thumb">
                         </div>
                         <!-- Post Excerpt -->
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit eleifend. Nullam viverra tincidunt dolor, at pulvinar dui. Nullam at risus ut ipsum viverra posuere. Aliquam quis convallis enim. Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. Aliquam finibus nulla quam, a iaculis justo finibus non. Suspendisse in fermentum nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit eleifend.</p>
+                        <p>{{Str::words($featuredPost->body,20,'....')}}</p>
                         <!-- Reading More -->
-                        <div class="post-continue-reading-share d-sm-flex align-items-center justify-content-between mt-30">
+                        <div
+                            class="post-continue-reading-share d-sm-flex align-items-center justify-content-between mt-30">
                             <div class="post-continue-btn">
-                                <a href="#" class="font-pt">Continue Reading <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                                <a href="#" class="font-pt">Continue Reading <i class="fa fa-chevron-right"
+                                                                                aria-hidden="true"></i></a>
                             </div>
                             <div class="post-share-btn-group">
                                 <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
@@ -100,7 +114,10 @@
                                 <h3><a href="#" class="font-pt mb-2">$250-million mansion is most expensive</a></h3>
                                 <span class="gazette-post-date mb-2">March 29, 2016</span>
                                 <a href="#" class="post-total-comments">3 Comments</a>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit eleifend. Nullam viverra tincidunt dolor, at pulvinar dui. Nullam at risus ut ipsum viverra posuere.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices egestas
+                                    nunc, quis venenatis orci tincidunt id. Fusce commodo blandit eleifend. Nullam
+                                    viverra tincidunt dolor, at pulvinar dui. Nullam at risus ut ipsum viverra
+                                    posuere.</p>
                             </div>
                         </div>
                         <!-- Single Today Post -->
@@ -116,7 +133,9 @@
                                 <h3><a href="#" class="font-pt mb-2">Homeless man steals $350,000 </a></h3>
                                 <p class="gazette-post-date mb-2">March 29, 2016</p>
                                 <a href="#" class="post-total-comments">3 Comments</a>
-                                <p>Aliquam quis convallis enim. Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis. Aliquam finibus nulla quam, a iaculis justo finibus non. Suspendisse in fermentum nunc.</p>
+                                <p>Aliquam quis convallis enim. Nunc pulvinar molestie sem id blandit. Nunc venenatis
+                                    interdum mollis. Aliquam finibus nulla quam, a iaculis justo finibus non.
+                                    Suspendisse in fermentum nunc.</p>
                             </div>
                         </div>
                     </div>
@@ -351,7 +370,8 @@
                     <div class="single-video-post">
                         <div class="video-post-thumb">
                             <img src="{{asset('assets/img/imgfront/blog-img/4.jpg')}}" alt="">
-                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play" aria-hidden="true"></i></a>
+                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play"
+                                                                                       aria-hidden="true"></i></a>
                         </div>
                         <h5><a href="#">Show suspended by PBS amid misconduct allegations</a></h5>
                     </div>
@@ -361,7 +381,8 @@
                     <div class="single-video-post">
                         <div class="video-post-thumb">
                             <img src="{{asset('assets/img/imgfront/blog-img/5.jpg')}}" alt="">
-                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play" aria-hidden="true"></i></a>
+                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play"
+                                                                                       aria-hidden="true"></i></a>
                         </div>
                         <h5><a href="#">Parents to Congress</a></h5>
                     </div>
@@ -371,7 +392,8 @@
                     <div class="single-video-post">
                         <div class="video-post-thumb">
                             <img src="{{asset('assets/img/imgfront/blog-img/6.jpg')}}" alt="">
-                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play" aria-hidden="true"></i></a>
+                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play"
+                                                                                       aria-hidden="true"></i></a>
                         </div>
                         <h5><a href="#">Third Buy Alert for This “Millionaire Maker” Stock</a></h5>
                     </div>
@@ -381,7 +403,8 @@
                     <div class="single-video-post">
                         <div class="video-post-thumb">
                             <img src="{{asset('assets/img/imgfront/blog-img/7.jpg')}}" alt="">
-                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play" aria-hidden="true"></i></a>
+                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play"
+                                                                                       aria-hidden="true"></i></a>
                         </div>
                         <h5><a href="#">The Chicago Mercantile Exchange is set to begin</a></h5>
                     </div>
@@ -391,7 +414,8 @@
                     <div class="single-video-post">
                         <div class="video-post-thumb">
                             <img src="{{asset('assets/img/imgfront/blog-img/8.jpg')}}" alt="">
-                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play" aria-hidden="true"></i></a>
+                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play"
+                                                                                       aria-hidden="true"></i></a>
                         </div>
                         <h5><a href="#">Trading bitcoin futures</a></h5>
                     </div>
@@ -401,7 +425,8 @@
                     <div class="single-video-post">
                         <div class="video-post-thumb">
                             <img src="{{asset('assets/img/imgfront/blog-img/9.jpg')}}" alt="">
-                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play" aria-hidden="true"></i></a>
+                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play"
+                                                                                       aria-hidden="true"></i></a>
                         </div>
                         <h5><a href="#">Are ‘Micro-Mansions’ the Next Big Thing?</a></h5>
                     </div>
@@ -411,7 +436,8 @@
                     <div class="single-video-post">
                         <div class="video-post-thumb">
                             <img src="{{asset('assets/img/imgfront/blog-img/10.jpg')}}" alt="">
-                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play" aria-hidden="true"></i></a>
+                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play"
+                                                                                       aria-hidden="true"></i></a>
                         </div>
                         <h5><a href="#">McKinney’s target market</a></h5>
                     </div>
@@ -421,7 +447,8 @@
                     <div class="single-video-post">
                         <div class="video-post-thumb">
                             <img src="{{asset('assets/img/imgfront/blog-img/11.jpg')}}" alt="">
-                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play" aria-hidden="true"></i></a>
+                            <a href="https://youtu.be/dIyXl9ZHEgg" class="videobtn"><i class="fa fa-play"
+                                                                                       aria-hidden="true"></i></a>
                         </div>
                         <h5><a href="#">Australian Property Prices Remain Flat</a></h5>
                     </div>
@@ -452,9 +479,14 @@
                                         <div class="gazette-post-tag">
                                             <a href="#">Editorial</a>
                                         </div>
-                                        <h2><a href="#" class="font-pt mb-15">Move over, bitcoin. <br>Here comes litecoin</a></h2>
+                                        <h2><a href="#" class="font-pt mb-15">Move over, bitcoin. <br>Here comes
+                                                litecoin</a></h2>
                                         <p class="editorial-post-date mb-15">March 29, 2016</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit eleifend. Nullam viverra tincidunt dolor, at pulvinar dui. Nullam at risus ut ipsum viverra posuere. Aliquam quis convallis enim. Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis...</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices
+                                            egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit
+                                            eleifend. Nullam viverra tincidunt dolor, at pulvinar dui. Nullam at risus
+                                            ut ipsum viverra posuere. Aliquam quis convallis enim. Nunc pulvinar
+                                            molestie sem id blandit. Nunc venenatis interdum mollis...</p>
                                     </div>
                                 </div>
                             </div>
@@ -474,9 +506,14 @@
                                         <div class="gazette-post-tag">
                                             <a href="#">Editorial</a>
                                         </div>
-                                        <h2><a href="#" class="font-pt mb-15">Move over, bitcoin. <br>Here comes litecoin</a></h2>
+                                        <h2><a href="#" class="font-pt mb-15">Move over, bitcoin. <br>Here comes
+                                                litecoin</a></h2>
                                         <p class="editorial-post-date mb-15">March 29, 2016</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit eleifend. Nullam viverra tincidunt dolor, at pulvinar dui. Nullam at risus ut ipsum viverra posuere. Aliquam quis convallis enim. Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis...</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices
+                                            egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit
+                                            eleifend. Nullam viverra tincidunt dolor, at pulvinar dui. Nullam at risus
+                                            ut ipsum viverra posuere. Aliquam quis convallis enim. Nunc pulvinar
+                                            molestie sem id blandit. Nunc venenatis interdum mollis...</p>
                                     </div>
                                 </div>
                             </div>
@@ -496,9 +533,14 @@
                                         <div class="gazette-post-tag">
                                             <a href="#">Editorial</a>
                                         </div>
-                                        <h2><a href="#" class="font-pt mb-15">Move over, bitcoin. <br>Here comes litecoin</a></h2>
+                                        <h2><a href="#" class="font-pt mb-15">Move over, bitcoin. <br>Here comes
+                                                litecoin</a></h2>
                                         <p class="editorial-post-date mb-15">March 29, 2016</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit eleifend. Nullam viverra tincidunt dolor, at pulvinar dui. Nullam at risus ut ipsum viverra posuere. Aliquam quis convallis enim. Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis...</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices
+                                            egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit
+                                            eleifend. Nullam viverra tincidunt dolor, at pulvinar dui. Nullam at risus
+                                            ut ipsum viverra posuere. Aliquam quis convallis enim. Nunc pulvinar
+                                            molestie sem id blandit. Nunc venenatis interdum mollis...</p>
                                     </div>
                                 </div>
                             </div>
@@ -518,9 +560,14 @@
                                         <div class="gazette-post-tag">
                                             <a href="#">Editorial</a>
                                         </div>
-                                        <h2><a href="#" class="font-pt mb-15">Move over, bitcoin. <br>Here comes litecoin</a></h2>
+                                        <h2><a href="#" class="font-pt mb-15">Move over, bitcoin. <br>Here comes
+                                                litecoin</a></h2>
                                         <p class="editorial-post-date mb-15">March 29, 2016</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit eleifend. Nullam viverra tincidunt dolor, at pulvinar dui. Nullam at risus ut ipsum viverra posuere. Aliquam quis convallis enim. Nunc pulvinar molestie sem id blandit. Nunc venenatis interdum mollis...</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices
+                                            egestas nunc, quis venenatis orci tincidunt id. Fusce commodo blandit
+                                            eleifend. Nullam viverra tincidunt dolor, at pulvinar dui. Nullam at risus
+                                            ut ipsum viverra posuere. Aliquam quis convallis enim. Nunc pulvinar
+                                            molestie sem id blandit. Nunc venenatis interdum mollis...</p>
                                     </div>
                                 </div>
                             </div>
