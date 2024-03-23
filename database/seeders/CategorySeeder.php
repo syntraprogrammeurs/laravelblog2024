@@ -14,6 +14,11 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         //
-        Category::factory()->count(10)->create();
+        $categories = ['Politics', 'Lifestyle', 'Travel', 'Health', 'Entertainment', 'Sport'];
+        foreach($categories as $category){
+            Category::create([
+                'name'=>$category
+            ]);
+        }
     }
 }

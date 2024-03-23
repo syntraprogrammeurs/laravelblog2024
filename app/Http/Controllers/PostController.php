@@ -206,8 +206,8 @@ class PostController extends Controller
     }
     //frontend.post
     public function post($id){
-        $post = Post::findOrFail($id);
-
+        $post = Post::with(['comments.user.photo', 'comments.user', 'photo', 'categories'])
+            ->findOrFail($id);
         return view('post',compact('post'));
     }
 }

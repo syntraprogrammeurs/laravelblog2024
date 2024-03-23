@@ -20,9 +20,9 @@ class PostCommentFactory extends Factory
     {
         return [
             //
-            'post_id' => Post::inRandomOrder()->first()->id,
-            'user_id'=> User::inRandomOrder()->first()->id,
-            'body'=>fake()->paragraph()
+            'post_id' =>Post::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
+            'body' => $this->faker->paragraph(),
         ];
     }
 }

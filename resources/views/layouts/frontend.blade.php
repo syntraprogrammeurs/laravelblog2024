@@ -20,11 +20,6 @@
 
     <!-- Responsive CSS -->
     <link href="{{asset('css/responsive.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="css/core-style.css">
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Responsive CSS -->
-    <link href="css/responsive.css" rel="stylesheet">
 
 </head>
 
@@ -41,7 +36,7 @@
                         <div id="breakingNewsTicker" class="ticker">
                             <ul>
                                 @foreach($postTickers as $postTicker)
-                                <li><a href="#">{{$postTicker->title}}</a></li>
+                                    <li><a href="#">{{$postTicker->title}}</a></li>
                                 @endforeach
                             </ul>
                         </div>
@@ -184,40 +179,16 @@
                 <div class="col-12">
                     <div class="main-menu">
                         <nav class="navbar navbar-expand-lg">
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#gazetteMenu" aria-controls="gazetteMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i> Menu</button>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#gazetteMenu" aria-controls="gazetteMenu" aria-expanded="false"
+                                    aria-label="Toggle navigation"><i class="fa fa-bars"></i> Menu
+                            </button>
                             <div class="collapse navbar-collapse" id="gazetteMenu">
                                 <ul class="navbar-nav mr-auto">
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="#">Today <span class="sr-only">(current)</span></a>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="index.html">Home</a>
-                                            <a class="dropdown-item" href="catagory.html">Catagory</a>
-                                            <a class="dropdown-item" href="single-post.html">Single Post</a>
-                                            <a class="dropdown-item" href="about-us.html">About Us</a>
-                                            <a class="dropdown-item" href="contact.html">Contact</a>
-                                        </div>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Politics</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Lifestyle</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Travel</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Health</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Entertainment</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">sport</a>
-                                    </li>
+                                   @foreach($postCategories as $postcategory)
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">{{$postcategory->name}}</a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                                 <!-- Search Form -->
                                 <div class="header-search-form mr-auto">
@@ -358,7 +329,8 @@
                 <div class="col-12">
                     <div class="copywrite-text">
                         <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                            All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>

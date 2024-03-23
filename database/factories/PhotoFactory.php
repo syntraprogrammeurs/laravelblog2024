@@ -28,7 +28,7 @@ class PhotoFactory extends Factory
 
         // In Faker 1.x kun je gebruik maken van 'image' methode direct
         // In Faker 2.x moet je de ImageProvider op de volgende manier gebruiken
-        $imageFile = $faker->image();
+        $imageFile = $faker->image($path, 640, 480, 'cats', true, true, 'Faker');
 
         // Het pad naar de afbeelding
         $relativePath = 'posts/'. basename($imageFile);
@@ -37,7 +37,7 @@ class PhotoFactory extends Factory
         Storage::disk('public')->put($relativePath, file_get_contents($imageFile));
 
         // Verwijder de tijdelijke afbeelding
-        unlink($imageFile);
+       // unlink($imageFile);
 
         // Geef de attributen terug die aan de Photo model moeten worden toegewezen
         return [
