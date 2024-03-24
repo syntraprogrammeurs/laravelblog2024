@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -16,8 +17,10 @@ class CategorySeeder extends Seeder
         //
         $categories = ['Politics', 'Lifestyle', 'Travel', 'Health', 'Entertainment', 'Sport'];
         foreach($categories as $category){
+            $slug = Str::slug($category,'-');
             Category::create([
-                'name'=>$category
+                'name'=>$category,
+                'slug'=>$slug
             ]);
         }
     }

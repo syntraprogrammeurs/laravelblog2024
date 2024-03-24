@@ -96,5 +96,8 @@ class CategoryController extends Controller
         $category->onlyTrashed()->restore();
         return redirect()->route('categories.index')->with('status', 'Category Restored!')->with('alert-type', 'warning');
     }
+    public function category(Category $category){
+        return view('category', compact('category'));
+    }
 
 }

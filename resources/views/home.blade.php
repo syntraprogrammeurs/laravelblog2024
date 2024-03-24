@@ -85,7 +85,7 @@
                         <div
                             class="post-continue-reading-share d-sm-flex align-items-center justify-content-between mt-30">
                             <div class="post-continue-btn">
-                                <a href="#" class="font-pt">Continue Reading <i class="fa fa-chevron-right"
+                                <a href="{{route('frontend.post', $featuredPost->slug)}}" class="font-pt">Continue Reading <i class="fa fa-chevron-right"
                                                                                 aria-hidden="true"></i></a>
                             </div>
                             <div class="post-share-btn-group">

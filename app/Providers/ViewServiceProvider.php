@@ -21,7 +21,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Of alleen voor specifieke views
-        view()->composer(['home', 'post'], function ($view) {
+        view()->composer(['home', 'post','category'], function ($view) {
             $view->with('postTickers', Post::with(['photo', 'categories'])->latest('created_at')->take(6)->get());
             $view->with('postCategories', Category::all());
         });

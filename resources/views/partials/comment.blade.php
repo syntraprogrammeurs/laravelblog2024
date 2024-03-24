@@ -30,16 +30,13 @@
                                     </div>
                                 </div>
                             @endforeach
-
-                            @if($comment->children->isNotEmpty())
                                 <ol class="children ms-4">
-                                    <p>child</p>
-                                    @foreach($comment->children as $child)
-                                       @include('partials.comment',['comment'=>$child])
-                                    @endforeach,
+
+{{--                                        dit kan je gebruiken om recursief je child comments op te roepen.
+dit kan een goede oefening zijn--}}
+{{--                                       @include('partials.comment',['comment'=>$child])--}}
+
                                 </ol>
-                            @endif
-                        </li>
                     </ol>
                 </div>
 

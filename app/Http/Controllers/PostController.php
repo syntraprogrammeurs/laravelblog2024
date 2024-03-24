@@ -205,9 +205,10 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('status', 'Post Restored!')->with('alert-type', 'warning');
     }
     //frontend.post
-    public function post($id){
-        $post = Post::with(['comments.user.photo', 'comments.user', 'photo', 'categories'])
-            ->findOrFail($id);
-        return view('post',compact('post'));
+     public function post(Post $post){
+        // Eager load the relations
+        $post = Post::with(['comments.user.photo', 'comments.user', 'photo', 'categories'])->find($post->id);
+        return view('post', compact('post'));
     }
+
 }

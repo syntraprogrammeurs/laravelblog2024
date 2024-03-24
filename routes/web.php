@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FrontendController::class,'index'])->name('frontend.home');
-Route::get('post/{slug}', [PostController::class,'post'])->name('frontend.post');
+Route::get('post/{post:slug}', [PostController::class,'post'])->name('frontend.post');
+Route::get('category/{category:slug}', [CategoryController::class,'category'])->name('category.category');
 
 Route::get('/contact', function(){
     return view('contact');

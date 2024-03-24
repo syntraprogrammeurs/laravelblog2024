@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Http\Controllers\PostController;
 use App\Models\Post;
+use App\Models\PostComment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +24,9 @@ class PostCommentFactory extends Factory
             //
             'post_id' =>Post::inRandomOrder()->first()->id,
             'user_id' => User::inRandomOrder()->first()->id,
+
             'body' => $this->faker->paragraph(),
+
         ];
     }
 }
