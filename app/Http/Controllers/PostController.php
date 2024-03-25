@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Keyword;
 use App\Models\Photo;
 use App\Models\Post;
 use App\Models\User;
@@ -37,8 +38,9 @@ class PostController extends Controller
     public function create()
     {
         //
+        $keywords = Keyword::all();
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories','keywords'));
     }
 
     /**
@@ -46,6 +48,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        
         //
         request()->validate([
            'title'=>['required', 'between:5,255'],
@@ -90,6 +93,10 @@ class PostController extends Controller
         // Synchroniseert eventuele rollen die aan de gebruiker zijn toegewezen.
         // Het tweede argument 'false' voorkomt het verwijderen van bestaande relaties voordat toevoegen.
         $post->categories()->sync($request->categories, false);
+        foreach($request->keywords as $keyword){
+            $keywordfind = Keyword::findOrFail($keyword);
+            $post->keywords()->save($keywordfind);
+        }
 
         // Redirect de gebruiker terug naar de gebruikerslijstpagina na succesvolle opslag.
         return redirect()->route('posts.index')->with('status', 'Post created');

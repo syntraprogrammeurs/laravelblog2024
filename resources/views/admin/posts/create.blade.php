@@ -30,6 +30,18 @@
                 @enderror
             </div>
             <div class="form-group mb-3">
+                <label for="">Keywords</label>
+                @foreach($keywords as $keyword)
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="{{$keyword->id}}" id="category{{$keyword->id}}"name="keywords[]">
+                        <label for="category{{$keyword->id}}" class="form-check-label">{{$keyword->name}}</label>
+                    </div>
+                @endforeach
+                @error('keywords')
+                <p class="text-danger fs-6">{{$message}}</p>
+                @enderror
+            </div>
+            <div class="form-group mb-3">
                 <textarea name="body" class="form-control" id="" cols="60" rows="10"></textarea>
                 @error('body')
                 <p class="text-danger fs-6">{{$message}}</p>

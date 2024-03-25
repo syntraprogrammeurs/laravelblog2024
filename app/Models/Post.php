@@ -28,6 +28,9 @@ class Post extends Model
     public function comments(){
         return $this->hasMany(PostComment::class);
     }
+    public function keywords(){
+        return $this->morphToMany(Keyword::class,'keywordable');
+    }
     /** filter (queryscope) */
 
     public static function getFillableFields(){
