@@ -11,7 +11,7 @@
                             <!-- Post Tag -->
                             <div class="gazette-post-tag">
                                 @foreach($post->categories as $category)
-                                    <a href="#">{{$category->name}}</a>
+                                    <a href="{{route('category.category', $category->slug)}}">{{$category->name}}</a>
                                 @endforeach
                             </div>
                             <h2 class="font-pt">{{$post->title}}</h2>

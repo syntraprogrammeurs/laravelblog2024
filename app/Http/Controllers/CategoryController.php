@@ -97,7 +97,8 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with('status', 'Category Restored!')->with('alert-type', 'warning');
     }
     public function category(Category $category){
-        return view('category', compact('category'));
+        $posts = $category->posts()->with(['photo', 'categories'])->latest()->take(6)->paginate(9);
+        return view('category', compact('category','posts'));
     }
 
 }

@@ -14,10 +14,10 @@
                 <div class="single-blog-post-content">
                     <div class="tags">
                         @foreach($postTicker->categories as $postCategory)
-                            <a href="#">{{$postCategory->name}}</a>
+                            <a href="{{route('category.category',$postCategory->slug)}}">{{$postCategory->name}}</a>
                         @endforeach
                     </div>
-                    <h3><a href="#" class="font-pt">{{$postTicker->title}}</a></h3>
+                    <h3><a href="{{route('frontend.post', $featuredPost->slug)}}" class="font-pt">{{$postTicker->title}}</a></h3>
                     <div class="date">
                         <a href="#">{{$postTicker->created_at ? $postTicker->created_at->diffForhumans() : 'no date'}}</a>
                     </div>
