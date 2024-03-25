@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\Admin;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
@@ -35,9 +37,13 @@ class CategoryController extends Controller
         //
         $validatedData = request()->validate([
             'name'=>['required', 'between:1,255'],
+
         ],[
             'name.required'=> 'Name is required',
+
         ]);
+        $validatedData['slug'] = Str::slug($request->name,'-');
+
         Category::create($validatedData);
 
         return redirect()->action([CategoryController::class, 'index']);
@@ -97,7 +103,7 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with('status', 'Category Restored!')->with('alert-type', 'warning');
     }
     public function category(Category $category){
-        $posts = $category->posts()->with(['photo', 'categories'])->latest()->take(6)->paginate(9);
+        $posts = $category->posts()->with(['photo', 'categories'])->latest()->paginate(9);
         return view('category', compact('category','posts'));
     }
 
