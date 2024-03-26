@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\BackendController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductsController;
 use App\Livewire\Counter;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -56,10 +58,11 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','verified']],function(){
 });
 //routes for only admin users
 Route::group(['prefix'=>'admin','middleware'=>['admin','verified']],function(){
-    Route::get('/dashboard',[\App\Http\Controllers\BackendController::class,'index'])->name('admin.index');
+    Route::get('/dashboard',[BackendController::class,'index'])->name('admin.index');
     Route::resource('users', App\Http\Controllers\AdminUsersController::class);
     Route::get('{user}/restore',[AdminUsersController::class, 'restore'])->name('admin.userrestore');
     Route::get('usersbc',[AdminUsersController::class,'index2'])->name('users-admin.index2');
+    Route::resource('products', ProductsController::class);
 });
 
 
