@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\BackendController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PostCommentController;
@@ -63,6 +64,7 @@ Route::group(['prefix'=>'admin','middleware'=>['admin','verified']],function(){
     Route::get('{user}/restore',[AdminUsersController::class, 'restore'])->name('admin.userrestore');
     Route::get('usersbc',[AdminUsersController::class,'index2'])->name('users-admin.index2');
     Route::resource('products', ProductsController::class);
+    Route::resource('brands', BrandController::class);
 });
 
 

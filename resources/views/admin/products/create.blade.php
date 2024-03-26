@@ -17,6 +17,18 @@
                 <p class="text-danger fs-6">{{$message}}</p>
                 @enderror
             </div>
+            <div class="form-group mb-3">
+                <label for="">Brands</label>
+                    <select class="form-select" name="brands[]">
+                        <option selected disabled>Choose here</option>
+                        @foreach($brands as $brand)
+                            <option value="{{$brand->id}}">{{$brand->name}}</option>
+                        @endforeach
+                    </select>
+                @error('keywords')
+                <p class="text-danger fs-6">{{$message}}</p>
+                @enderror
+            </div>
 
             <div class="form-group mb-3">
                 <label for="">Keywords</label>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Keyword;
 use App\Models\Photo;
 use App\Models\Post;
@@ -19,7 +20,8 @@ class ProductsController extends Controller
     public function index()
     {
         //
-        return view('admin.products.index');
+        $products= Product::with(['photo','keywords'])->paginate(10);
+        return view('admin.products.index',compact('products'));
     }
 
     /**
@@ -28,18 +30,22 @@ class ProductsController extends Controller
     public function create()
     {
         //
+        $brands = Brand::all();
         $keywords= Keyword::all();
-        return view('admin.products.create',compact('keywords'));
+        return view('admin.products.create',compact('keywords','brands'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
+
+
     {
         request()->validate([
             'name' => ['required', 'between:3,255'],
             'keywords' => ['required', Rule::exists('keywords', 'id')],
+            'brands' => ['required', Rule::exists('brands', 'id')],
             'body' => 'required',
             'price'=> ['required', 'min:0.01','max:9999999.99']
         ], [
@@ -47,12 +53,14 @@ class ProductsController extends Controller
             'name.between' => 'Name between 3 and 255 char required',
             'body.required' => 'Message is required',
             'price.required'=> 'Price is required',
-            'keywords.required' => 'Please check minimum one keyword'
+            'keywords.required' => 'Please check minimum one keyword',
+            'brands.required' => 'Please check minimum one Brand'
         ]);
 
         //photo_id, name,price, body
         $product = new Product();
         $product->name = $request->name;
+        $product->brand_id = $request->brands[0];
         $product->price = $request->price;
         $product->body = $request->body;
 
