@@ -24,6 +24,7 @@ class ProductsController extends Controller
         $brands = Brand::all();
         $products= Product::with(['photo','keywords','brand','productcategories'])->paginate(10);
         return view('admin.products.index',compact('products','brands'));
+
     }
 
     /**
