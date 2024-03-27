@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductsController;
 use App\Livewire\Counter;
 use App\Models\User;
@@ -65,6 +66,7 @@ Route::group(['prefix'=>'admin','middleware'=>['admin','verified']],function(){
     Route::get('usersbc',[AdminUsersController::class,'index2'])->name('users-admin.index2');
     Route::resource('products', ProductsController::class);
     Route::resource('brands', BrandController::class);
+    Route::resource('productcategories', ProductCategoryController::class);
 });
 
 

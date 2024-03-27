@@ -78,6 +78,8 @@
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="{{route('products.index')}}">All Products</a>
                         <a class="nav-link" href="{{route('products.create')}}">Create Product</a>
+                        <a class="nav-link" href="{{route('productcategories.index')}}">All Product Categories</a>
+                        <a class="nav-link" href="{{route('productcategories.create')}}">Create Product Category</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsBrands"
