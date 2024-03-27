@@ -29,7 +29,18 @@
                 <p class="text-danger fs-6">{{$message}}</p>
                 @enderror
             </div>
-
+            <div class="form-group mb-3">
+                <label for="">Product Categories</label>
+                @foreach($productcategories as $productcategory)
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="{{$productcategory->id}}" id="category{{$productcategory->id}}"name="keywords[]">
+                        <label for="category{{$productcategory->id}}" class="form-check-label">{{$productcategory->name}}</label>
+                    </div>
+                @endforeach
+                @error('productcategories')
+                <p class="text-danger fs-6">{{$message}}</p>
+                @enderror
+            </div>
             <div class="form-group mb-3">
                 <label for="">Keywords</label>
                 @foreach($keywords as $keyword)

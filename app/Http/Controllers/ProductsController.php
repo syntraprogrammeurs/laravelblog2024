@@ -7,6 +7,7 @@ use App\Models\Keyword;
 use App\Models\Photo;
 use App\Models\Post;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -20,8 +21,9 @@ class ProductsController extends Controller
     public function index()
     {
         //
-        $products= Product::with(['photo','keywords'])->paginate(10);
-        return view('admin.products.index',compact('products'));
+        $brands = Brand::all();
+        $products= Product::with(['photo','keywords','brand','productcategories'])->paginate(10);
+        return view('admin.products.index',compact('products','brands'));
     }
 
     /**
@@ -32,7 +34,8 @@ class ProductsController extends Controller
         //
         $brands = Brand::all();
         $keywords= Keyword::all();
-        return view('admin.products.create',compact('keywords','brands'));
+        $productcategories = ProductCategory::all();
+        return view('admin.products.create',compact('keywords','brands','productcategories'));
     }
 
     /**
@@ -46,6 +49,7 @@ class ProductsController extends Controller
             'name' => ['required', 'between:3,255'],
             'keywords' => ['required', Rule::exists('keywords', 'id')],
             'brands' => ['required', Rule::exists('brands', 'id')],
+            'productcategories' => ['required', Rule::exists('productcategories', 'id')],
             'body' => 'required',
             'price'=> ['required', 'min:0.01','max:9999999.99']
         ], [
@@ -54,7 +58,8 @@ class ProductsController extends Controller
             'body.required' => 'Message is required',
             'price.required'=> 'Price is required',
             'keywords.required' => 'Please check minimum one keyword',
-            'brands.required' => 'Please check minimum one Brand'
+            'brands.required' => 'Please check minimum one Brand',
+            'productcategories.required' => 'Please check minimum one Product Category'
         ]);
 
         //photo_id, name,price, body
@@ -91,6 +96,10 @@ class ProductsController extends Controller
                 $keywordfind = Keyword::findOrFail($keyword);
                 $product->keywords()->save($keywordfind);
             }
+            foreach($request->productcategories as $category){
+                $categoryfind = Keyword::findOrFail($category);
+                $category->keywords()->save($categoryfind);
+            }
 
             return redirect()->route('products.index');
         }
@@ -125,5 +134,11 @@ class ProductsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function productsPerBrand(string $id){
+        $brands = Brand::all();
+        $products = Product::where('brand_id',$id)->with(['keywords','photo','brand','productcategories'])->paginate(10);
+        return view('admin.products.index', compact('products', 'brands'));
     }
 }

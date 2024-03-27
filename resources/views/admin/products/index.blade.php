@@ -15,6 +15,16 @@
             <a href="{{route('products.create')}}" class="btn btn-primary m-2 rounded-end-pill"><i
                     class="fa-solid fa-plus"></i> Add product</a>
         </div>
+        <div class="d-flex">
+            <a href="{{route('products.index')}}" class="badge rounded-pill text-bg-dark text-white"> All
+                @foreach($brands as $brand)
+                    <a href="{{route('admin.productsPerBrand', $brand->id)}}" class="badge rounded-pill text-bg-dark text-white">
+                        {{$brand->name}}
+                    </a>
+                @endforeach
+
+            </a>
+        </div>
 
         <table class="table table-striped shadow-lg p-3 mb-5 bg-body-tertiary rounded">
             <thead>
@@ -23,6 +33,7 @@
                 <th>Photo</th>
                 <th>Name</th>
                 <th>Brands</th>
+                <th>Categories</th>
                 <th>Price</th>
                 <th>Body</th>
                 <th>Keywords</th>
@@ -46,6 +57,12 @@
                     <td>
                        {{$product->brand->name ? $product->brand->name : 'no brand'}}
                     </td>
+                    <td>
+                        @foreach($product->productcategories as $productcategory)
+                            <span
+                                class="badge rounded-pill text-bg-success">{{$productcategory->name}}</span>
+                        @endforeach
+                    </td>
                     <td>{{$product->price}}</td>
                     <td>{{Str::limit($product->body,20)}}</td>
                     <td>
@@ -67,7 +84,7 @@
                                     <i class="fa-solid fa-eye"></i>
                                     Show
                                 </a>
-                                <a href="#" class="dropdown-item">
+                                <a href="{{route('products.edit',$product)}}" class="dropdown-item">
 
                                     <i class="fa-solid fa-pen-to-square"></i>
                                     Edit

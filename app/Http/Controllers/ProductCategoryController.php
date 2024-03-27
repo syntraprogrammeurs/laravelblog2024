@@ -47,17 +47,20 @@ class ProductCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProductCategory $productCategory)
+    public function edit(ProductCategory $productcategory)
     {
         //
+        return view('admin.productcategories.edit', compact('productcategory'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProductCategory $productCategory)
+    public function update(Request $request, ProductCategory $productcategory)
     {
         //
+        $productcategory->update($request->all());
+        return redirect()->back();
     }
 
     /**

@@ -67,6 +67,7 @@ Route::group(['prefix'=>'admin','middleware'=>['admin','verified']],function(){
     Route::resource('products', ProductsController::class);
     Route::resource('brands', BrandController::class);
     Route::resource('productcategories', ProductCategoryController::class);
+    Route::get('products/brand/{id}', [ProductsController::class, 'productsPerBrand'])->name('admin.productsPerBrand');
 });
 
 
